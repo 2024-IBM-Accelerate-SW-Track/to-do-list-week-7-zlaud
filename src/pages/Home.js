@@ -29,8 +29,10 @@ class Home extends Component {
   // the addTodo function simply creates a new array that includes the user submitted todo item and then
   // updates the state with the new list.
   addTodo = (todo) => {
-    const exists = this.state.todos.find(t => t.content === todo.content);
-    if (exists || todo.duedate == null || todo.duedate === "Invalid Date"){ return }
+    const exists = this.state.todos.find((t) => t.content === todo.content);
+    if (exists || todo.duedate == null || todo.duedate === "Invalid Date") {
+      return;
+    }
     // In React, keys or ids in a list help identify which items have changed, been added or removed. Keys
     // should not share duplicate values.
     // To avoid having dup values, we use the Math.random() function to generate a random value for a todo id.
@@ -38,23 +40,23 @@ class Home extends Component {
     // dealing with a larger data sensitive project.
     todo.id = Math.random();
 
-     // Send Task Item to database as a json object upon submission
-     const jsonObject = {
+    // Send Task Item to database as a json object upon submission
+    const jsonObject = {
       id: todo.id,
       task: todo.content,
       currentDate: todo.date,
-      dueDate: todo.duedate
+      dueDate: todo.duedate,
     };
 
     Axios({
       method: "POST",
-      url: "http://localhost:8080/items",
-      data: {jsonObject},
+      url: "http://localhost:8080/add/item",
+      data: { jsonObject },
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
-        console.log(res.data.message);
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      console.log(res.data.message);
     });
 
     // Create a array that contains the current array and the new todo item

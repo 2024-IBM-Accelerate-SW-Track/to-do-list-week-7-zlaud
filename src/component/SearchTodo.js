@@ -3,7 +3,6 @@ import { Button, TextField } from "@mui/material";
 import Axios from "axios";
 
 class SearchTodo extends Component {
-  
   state = {
     tmpdata: [],
   };
@@ -11,33 +10,32 @@ class SearchTodo extends Component {
   handleChange = (e) => {
     this.setState({
       content: e.target.value,
-      date: Date().toLocaleString('en-US'),
+      date: Date().toLocaleString("en-US"),
     });
   };
-  
 
   handleSubmit = (e) => {
     //Begin Here
-    e.preventDefault();  
+    e.preventDefault();
     // HTTP Client to send a GET request
     Axios({
       method: "GET",
-      url: "http://localhost:8080/items/search",
+      url: "http://localhost:8080/get/searchitem",
       headers: {
-        "Content-Type": "application/json" 
+        "Content-Type": "application/json",
       },
       params: {
-        taskname: this.state.content
-      }
-    }).then(res => {
+        taskname: this.state.content,
+      },
+    }).then((res) => {
       this.setState({
         tmpdata: JSON.stringify(res.data),
       });
-      // uncomment to see from the browser console log what is returned 
+      // uncomment to see from the browser console log what is returned
       //console.log(this.state.tmpdata);
     });
   };
-  
+
   render() {
     return (
       <div>
@@ -48,11 +46,11 @@ class SearchTodo extends Component {
             variant="outlined"
             onChange={this.handleChange}
             value={this.state.value}
-          /> 
+          />
           <Button
             id="search-item-button"
-            name='submit'
-            style={{ marginLeft: "10px",marginTop:10 }}
+            name="submit"
+            style={{ marginLeft: "10px", marginTop: 10 }}
             onClick={this.handleSubmit}
             variant="contained"
             color="primary"
